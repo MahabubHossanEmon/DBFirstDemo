@@ -5,7 +5,17 @@
 }
 @if(TempData["message"]!= null)
 {
-    <h1>Message:@TempData["Message"]</h1>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Message</strong> @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Message</strong> @TempData["success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 }
 <h1>List</h1>
 

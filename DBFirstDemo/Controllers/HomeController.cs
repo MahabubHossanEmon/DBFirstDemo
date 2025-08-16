@@ -19,6 +19,32 @@ public class HomeController : Controller
     {
         return View();
     }
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Create(Student stu)
+    {
+        if(ModelState.IsValid)
+        {
+            try
+            {
+                context.Students.Add(stu);
+                context.SaveChanges();
+                TempData["success"] = "Data Insert Successfuly";
+            }
+            catch(Exception ex)
+            {
+                TempData["message"] = "insert fail";
+            }
+            return RedirectToAction("List");
+        }
+        return View(stu);
+    }
+
 
     public IActionResult List()
     {
@@ -38,10 +64,11 @@ public class HomeController : Controller
             }
             else
             {
-                TempData["message"] = "Not Found :" + id;
+                TempData["message"] = "Student Not Found :" + id;
                 return RedirectToAction("List");
             }
         }
+         TempData["message"] = "Please Pass Roll To Search Information";
         return RedirectToAction("List");
     }
     public IActionResult Privacy()
