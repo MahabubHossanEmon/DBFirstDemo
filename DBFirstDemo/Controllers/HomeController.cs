@@ -45,6 +45,38 @@ public class HomeController : Controller
         return View(stu);
     }
 
+    public IActionResult Edit(int? id)
+    {
+        if (id != null)
+        {
+           Student stu = context.Students.FirstOrDefault(item => item.Roll == id);
+            if (stu != null)
+            {
+                return View(stu);
+            }
+            else
+            {
+                TempData["message"] = "Not found";
+                return RedirectToAction("List");
+            }
+
+        }
+        TempData["message"] = "Please Pass Roll To  Edit";
+        return RedirectToAction("List");
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Student stu)
+    {
+        if (ModelState.IsValid)
+        {
+            context.Students.Update(stu);
+            context.SaveChanges();
+            TempData["success"] = "Data Update Successfuly";
+            return RedirectToAction("list");
+        }
+        return View(stu);
+    }
 
     public IActionResult List()
     {
